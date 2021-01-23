@@ -36,8 +36,13 @@ export class GildedRose {
 
     constructor(items = [] as Array<Item>) {
         items.forEach((item) => {
-            if (isSulfuras(item) && item.quality !== 80) {
-                item.quality = 80;
+            if (isSulfuras(item)) {
+                if (item.sellIn < 0) {
+                    item.sellIn = 0;
+                }
+                if (item.quality < 80) {
+                    item.quality = 80;
+                }
             }
         });
         this.items = items;
@@ -57,20 +62,17 @@ export class GildedRose {
 
             item.sellIn--;
 
-            if (quality === 0 || quality === 50) {
-                continue;
-            }
-
             if (isAgedBrie(item) || isBackstagePasses(item)) {
-                let qualityAdvance = 1;
-                if (isBackstagePasses(item)) {
-                    qualityAdvance = sellIn <= 5 ? 3 : 2;
+                if (isAgedBrie(item) && quality < 50) {
+                    item.quality++;
+                } else if (isBackstagePasses(item)) {
                     if (sellIn <= 0) {
-                        qualityAdvance = -item.quality;
+                        item.quality = 0;
+                    } else if (quality < 50) {
+                        item.quality += sellIn <= 5 ? 3 : 2;
                     }
                 }
-                item.quality += qualityAdvance;
-            } else {
+            } else if (quality > 0) {
                 const qualityDegradation = isConjured(item) || sellIn <= 0 ? 2 : 1;
                 item.quality -= qualityDegradation
             }

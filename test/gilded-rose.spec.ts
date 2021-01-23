@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { Item, GildedRose } from '../app/gilded-rose';
 
 describe('Gilded Rose', function () {
-
     it('should lower sellIn and quality at the end of the day', function() {
         const gildedRose = new GildedRose([ new Item('foo', 5, 5) ]);
         const items = gildedRose.updateQuality();
@@ -25,7 +24,7 @@ describe('Gilded Rose', function () {
         expect(items[0].quality).to.equal(7);
     });
 
-    it('should never make quality of an item as negative', function() {
+    it('should never make quality of an item negative', function() {
         const gildedRose = new GildedRose([ new Item('foo', 1, 1) ]);
 
         let items = gildedRose.updateQuality();
@@ -40,17 +39,17 @@ describe('Gilded Rose', function () {
     });
 
     it('should increase quality for "Aged Brie" items', function() {
-        const gildedRose = new GildedRose([ new Item('Aged Brie', 1, 1) ]);
+        const gildedRose = new GildedRose([ new Item('Aged Brie', 1, 0) ]);
 
         let items = gildedRose.updateQuality();
         expect(items[0].name).to.equal('Aged Brie');
         expect(items[0].sellIn).to.equal(0);
-        expect(items[0].quality).to.equal(2);
+        expect(items[0].quality).to.equal(1);
 
         items = gildedRose.updateQuality();
         expect(items[0].name).to.equal('Aged Brie');
         expect(items[0].sellIn).to.equal(-1);
-        expect(items[0].quality).to.equal(3);
+        expect(items[0].quality).to.equal(2);
     });
 
     it('should never set quality more than 50', function() {
