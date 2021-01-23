@@ -1,0 +1,20 @@
+Gilded Rose
+    ✓ should lower sellIn and quality at the end of the day
+    ✓ should reduce quality twice as fast once the sell by date has passed
+    ✓ should never make quality of an item as negative
+    ✓ should increase quality for "Aged Brie" items
+    ✓ should never set quality more than 50
+    ✓ should not lower sellIn and quality for "Sulfuras" items
+    ✓ should increase quality for "Backstage passes" items
+    ✓ should set quality to zero for "Backstage passes" items after concert
+    ✓ should lower quality for "Conjured" items twice as fast as normal items
+
+
+  9 passing (7ms)
+
+----------------|----------|----------|----------|----------|----------------|
+File            |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+----------------|----------|----------|----------|----------|----------------|
+All files       |      100 |    96.15 |      100 |      100 |                |
+ gilded-rose.ts |      100 |    96.15 |      100 |      100 |             37 |
+----------------|----------|----------|----------|----------|----------------|
