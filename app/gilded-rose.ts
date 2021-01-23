@@ -46,26 +46,16 @@ export class GildedRose {
             if (!isAgedBrie(item) && !isBackstagePasses(item)) {
                 if (item.quality > 0) {
                     if (!isSulfuras(item)) {
-                        let qualityDegradation = isConjured(item) ? 2 : 1;
+                        const qualityDegradation = isConjured(item) ? 2 : 1;
                         item.quality = item.quality - qualityDegradation
                     }
                 }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1
-                    if (isBackstagePasses(item)) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1
-                            }
-                        }
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1
-                            }
-                        }
-                    }
+            } else if (item.quality < 50) {
+                let qualityAdvance = 1;
+                if (isBackstagePasses(item)) {
+                    qualityAdvance = item.sellIn <= 5 ? 3 : 2;
                 }
+                item.quality += qualityAdvance;
             }
             if (!isSulfuras(item)) {
                 item.sellIn = item.sellIn - 1;
