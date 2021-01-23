@@ -15,6 +15,10 @@ function isBackstagePasses(item: Item): boolean {
     return compareName(item.name, 'backstage passes');
 }
 
+function isConjured(item: Item): boolean {
+    return compareName(item.name, 'conjured');
+}
+
 export class Item {
     name: string;
     sellIn: number;
@@ -42,7 +46,8 @@ export class GildedRose {
             if (!isAgedBrie(item) && !isBackstagePasses(item)) {
                 if (item.quality > 0) {
                     if (!isSulfuras(item)) {
-                        item.quality = item.quality - 1
+                        let qualityDegradation = isConjured(item) ? 2 : 1;
+                        item.quality = item.quality - qualityDegradation
                     }
                 }
             } else {
