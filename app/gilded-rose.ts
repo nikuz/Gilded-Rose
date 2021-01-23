@@ -35,6 +35,11 @@ export class GildedRose {
     items: Array<Item>;
 
     constructor(items = [] as Array<Item>) {
+        items.forEach((item) => {
+            if (isSulfuras(item) && item.quality !== 80) {
+                item.quality = 80;
+            }
+        });
         this.items = items;
     }
 
@@ -56,27 +61,18 @@ export class GildedRose {
                 continue;
             }
 
-            if (!isAgedBrie(item) && !isBackstagePasses(item)) {
-                const qualityDegradation = isConjured(item) ? 2 : 1;
-                item.quality = item.quality - qualityDegradation
-            } else {
+            if (isAgedBrie(item) || isBackstagePasses(item)) {
                 let qualityAdvance = 1;
                 if (isBackstagePasses(item)) {
                     qualityAdvance = sellIn <= 5 ? 3 : 2;
+                    if (sellIn <= 0) {
+                        qualityAdvance = -item.quality;
+                    }
                 }
                 item.quality += qualityAdvance;
-            }
-
-            if (item.sellIn < 0) {
-                if (!isAgedBrie(item)) {
-                    if (!isBackstagePasses(item)) {
-                        item.quality = item.quality - 1
-                    } else {
-                        item.quality = item.quality - item.quality
-                    }
-                } else {
-                    item.quality = item.quality + 1
-                }
+            } else {
+                const qualityDegradation = isConjured(item) || sellIn <= 0 ? 2 : 1;
+                item.quality -= qualityDegradation
             }
         }
 

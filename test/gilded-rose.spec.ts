@@ -42,10 +42,15 @@ describe('Gilded Rose', function () {
     it('should increase quality for "Aged Brie" items', function() {
         const gildedRose = new GildedRose([ new Item('Aged Brie', 1, 1) ]);
 
-        const items = gildedRose.updateQuality();
+        let items = gildedRose.updateQuality();
         expect(items[0].name).to.equal('Aged Brie');
         expect(items[0].sellIn).to.equal(0);
         expect(items[0].quality).to.equal(2);
+
+        items = gildedRose.updateQuality();
+        expect(items[0].name).to.equal('Aged Brie');
+        expect(items[0].sellIn).to.equal(-1);
+        expect(items[0].quality).to.equal(3);
     });
 
     it('should never set quality more than 50', function() {
@@ -68,7 +73,7 @@ describe('Gilded Rose', function () {
         const items = gildedRose.updateQuality();
         expect(items[0].name).to.equal('Sulfuras');
         expect(items[0].sellIn).to.equal(5);
-        expect(items[0].quality).to.equal(5);
+        expect(items[0].quality).to.equal(80);
     });
 
     it('should increase quality for "Backstage passes" items', function() {
