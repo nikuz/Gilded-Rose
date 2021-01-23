@@ -1,3 +1,20 @@
+//
+function compareName(name: string, target: string): boolean {
+    return name.toLocaleLowerCase().indexOf(target) !== -1
+}
+
+function isAgedBrie(item: Item): boolean {
+    return compareName(item.name, 'aged brie');
+}
+
+function isSulfuras(item: Item): boolean {
+    return compareName(item.name, 'sulfuras');
+}
+
+function isBackstagePasses(item: Item): boolean {
+    return compareName(item.name, 'backstage passes');
+}
+
 export class Item {
     name: string;
     sellIn: number;
@@ -22,16 +39,16 @@ export class GildedRose {
         for (let i = 0, l = items.length; i < l; i++) {
             const item = items[i];
 
-            if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+            if (!isAgedBrie(item) && !isBackstagePasses(item)) {
                 if (item.quality > 0) {
-                    if (item.name != 'Sulfuras, Hand of Ragnaros') {
+                    if (!isSulfuras(item)) {
                         item.quality = item.quality - 1
                     }
                 }
             } else {
                 if (item.quality < 50) {
                     item.quality = item.quality + 1
-                    if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+                    if (isBackstagePasses(item)) {
                         if (item.sellIn < 11) {
                             if (item.quality < 50) {
                                 item.quality = item.quality + 1
@@ -45,14 +62,14 @@ export class GildedRose {
                     }
                 }
             }
-            if (item.name != 'Sulfuras, Hand of Ragnaros') {
+            if (!isSulfuras(item)) {
                 item.sellIn = item.sellIn - 1;
             }
             if (item.sellIn < 0) {
-                if (item.name != 'Aged Brie') {
-                    if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+                if (!isAgedBrie(item)) {
+                    if (!isBackstagePasses(item)) {
                         if (item.quality > 0) {
-                            if (item.name != 'Sulfuras, Hand of Ragnaros') {
+                            if (!isSulfuras(item)) {
                                 item.quality = item.quality - 1
                             }
                         }
